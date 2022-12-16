@@ -37,7 +37,7 @@ public class Main {
 
             // if gibberish is typed or format is wrong
 
-            } else if(splitString.length != 3 && !splitString[0].strip().equals("exit") && !splitString[0].equals("$last")) {
+            } else if(splitString.length != 3 && (!splitString[0].strip().equals("exit") && !splitString[0].equals("$last"))) {
 
                 System.out.println("Invalid input");
 
