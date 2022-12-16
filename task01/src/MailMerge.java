@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MailMerge {
 
-    int sizeOfCSVLines = 0;
+    int numOfPeople = 0;
 
     public MailMerge() {
 
@@ -55,7 +55,8 @@ public class MailMerge {
                     tempdetailList.get(i).add(splitOther[i]);
                 }
 
-                sizeOfCSVLines++;
+                numOfPeople++;
+                //System.out.println(numOfPeople);
             }
 
             //System.out.println(tempdetailList);
@@ -114,7 +115,7 @@ public class MailMerge {
 
     public void combineFiles(HashMap<String, List<String>> nameList, String templateLine) {
 
-        for(int i = 1; i < sizeOfCSVLines; i++) {
+        for(int i = 1; i <= numOfPeople; i++) {
 
             String formattedEMail = templateLine
             .replace("<<address>>", nameList.get("address").get(i) +"\n\n")
