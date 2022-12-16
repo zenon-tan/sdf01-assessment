@@ -41,7 +41,7 @@ public class MailMerge {
                 tempdetailList.add(tempList);
             }
 
-            System.out.println(tempdetailList);
+            //System.out.println(tempdetailList);
 
             String otherLine;
 
