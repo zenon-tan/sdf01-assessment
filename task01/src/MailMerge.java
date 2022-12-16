@@ -30,7 +30,6 @@ public class MailMerge {
 
             while (null != (line = bfc.readLine())) {
 
-                // System.out.println(line);
                 List<String> splitString = Arrays.asList(line.split(","));
                 detailList.add(splitString);
 
