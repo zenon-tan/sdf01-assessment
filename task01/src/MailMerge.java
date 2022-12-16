@@ -1,4 +1,3 @@
-package task01;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +12,8 @@ public class MailMerge {
 
     }
 
-    // For data, read the file and output the lines to a List of (first_name, last_name, address, years)
+    // For data, read the file and output the lines to a List of (first_name,
+    // last_name, address, years)
     // Create a list of lists to store them
 
     public List<List<String>> readCSV(String dataCSV) {
@@ -28,36 +28,25 @@ public class MailMerge {
 
             String line;
 
+            while (null != (line = bfc.readLine())) {
 
-            while(null != (line = bfc.readLine())) {
-
-
-                //System.out.println(line);
+                // System.out.println(line);
                 List<String> splitString = Arrays.asList(line.split(","));
                 detailList.add(splitString);
-
 
             }
 
             detailList.remove(0);
-            //System.out.println(detailList);
+            // System.out.println(detailList);
 
             bfc.close();
             fr.close();
 
-            
-
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         return detailList;
-
-        
-
- 
-
 
     }
 
@@ -72,53 +61,41 @@ public class MailMerge {
 
             String line;
 
-            while(null != (line = bfc.readLine())) {
+            while (null != (line = bfc.readLine())) {
 
                 mailDetail.append(line);
-                
 
             }
 
             bfc.close();
             fr.close();
 
-
-            System.out.println(mailDetail);
-        
-            
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return mailDetail.toString();
-    
+
     }
 
-    public void combineFiles(List<List<String>> nameList, String templateLine) 
-    {
+    public void combineFiles(List<List<String>> nameList, String templateLine) {
 
-        for(List<String> detail : nameList) {
+        for (List<String> detail : nameList) {
 
-            //System.out.println(templateLine);
+            // System.out.println(templateLine);
 
             String formattedEmail = templateLine.replace("<<address>>", detail.get(2) + "\n\n")
-            .replace("<<first_name>>,", detail.get(0) + "," + "\n\n")
-            .replace("<<years>>", detail.get(3)).replace("\\n", System.lineSeparator()) + "\n";
+                    .replace("<<first_name>>,", detail.get(0) + "," + "\n\n")
+                    .replace("<<years>>", detail.get(3)).replace("\\n", System.lineSeparator()) + "\n";
 
             System.out.println(formattedEmail);
-
 
         }
     }
 
-
-
     // For the file format
-    //Read the file and store them in a line with \n 
+    // Read the file and store them in a line with \n
 
     // Print out the formatted String
 
-    
-    
 }

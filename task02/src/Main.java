@@ -1,4 +1,4 @@
-package task02;
+package task02.src;
 
 import java.io.Console;
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int $last = 0;
+        float $last = 0;
 
         Boolean isQuit = false;
 
@@ -45,7 +45,7 @@ public class Main {
 
                 if(OPERATORS.contains(operator)) {
 
-                    int $newlast = 0;
+                    float $newlast = 0;
 
                     if(firstNum.matches(INTREGEX) && secondNum.matches(INTREGEX)) {
 
@@ -69,14 +69,28 @@ public class Main {
                     }
                      else if(firstNum.equals("$last") && secondNum.equals("$last")) {
 
-                        int firstLast = $last;
-                        int secondLast = $last;
+                        float firstLast = $last;
+                        float secondLast = $last;
 
                         $newlast = performCalculation(firstLast, operator, secondLast);
                         $last = $newlast;
                     } 
 
-                    System.out.println($last);
+                    if($last == (int)$last) {
+
+                        System.out.println((int)$last);
+
+
+                    } else {
+
+                        System.out.println($last);
+
+                    }
+
+
+                    
+
+                    
 
                 } else {
 
@@ -90,9 +104,9 @@ public class Main {
         }
 
 
-    } public static int performCalculation(int first, String operator, int second) {
+    } public static float performCalculation(float first, String operator, float second) {
 
-        int sum = 0;
+        float sum = 0;
 
         switch(operator) {
 
