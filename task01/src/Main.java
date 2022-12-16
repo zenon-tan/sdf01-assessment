@@ -1,6 +1,7 @@
 
 
 
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
@@ -12,7 +13,7 @@ public class Main {
 
         MailMerge mailMerge = new MailMerge();
 
-        List<List<String>> nameList = mailMerge.readCSV(csvFile);
+        HashMap<String, List<String>> nameList = mailMerge.readCSV(csvFile);
         String mailFormat = mailMerge.readTxt(templateFile);
         mailMerge.combineFiles(nameList, mailFormat);
 

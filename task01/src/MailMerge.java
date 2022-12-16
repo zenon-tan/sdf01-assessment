@@ -3,10 +3,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class MailMerge {
+
+    int sizeOfCSVLines = 0;
 
     public MailMerge() {
 
@@ -17,9 +19,12 @@ public class MailMerge {
     // Create a nested list to store them
     // Map? Maybe not
 
-    public List<List<String>> readCSV(String dataCSV) {
+    public HashMap<String, List<String>> readCSV(String dataCSV) {
 
-        List<List<String>> detailList = new ArrayList<List<String>>();
+        // List of HashMap<String, String> of key = first_name, last_name, address, years
+
+        HashMap<String, List<String>> tempHash = new HashMap<>();
+        List<List<String>> tempdetailList = new ArrayList<List<String>>();
 
         try {
 
@@ -27,26 +32,53 @@ public class MailMerge {
             FileReader fr = new FileReader(dataCSV);
             BufferedReader bfc = new BufferedReader(fr);
 
-            String line;
+            String line = bfc.readLine();
 
-            while (null != (line = bfc.readLine())) {
-
-                List<String> splitString = Arrays.asList(line.split(","));
-                detailList.add(splitString);
-
+            String[] splitHeaders = line.split(",");
+            for(String i : splitHeaders) {
+                List<String> tempList = new ArrayList<>();
+                tempList.add(i);
+                tempdetailList.add(tempList);
             }
 
-            // Remove the header
-            detailList.remove(0);
+            System.out.println(tempdetailList);
+
+            String otherLine;
+
+            while (null != (otherLine = bfc.readLine())) {
+
+               //System.out.println(otherLine);
+                String[] splitOther = otherLine.split(",");
+            
+
+                for(int i = 0; i < splitOther.length; i++) {
+                    tempdetailList.get(i).add(splitOther[i]);
+                }
+
+                sizeOfCSVLines++;
+            }
+
+            //System.out.println(tempdetailList);
+
+            for(List<String> i : tempdetailList) {
+
+
+                tempHash.put(i.get(0), i);
+
+            }
+            
+
+            //System.out.println(tempHash);
 
             bfc.close();
             fr.close();
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return detailList;
+        return tempHash;
 
     }
 
@@ -80,22 +112,24 @@ public class MailMerge {
 
     }
 
-    public void combineFiles(List<List<String>> nameList, String templateLine) {
+    public void combineFiles(HashMap<String, List<String>> nameList, String templateLine) {
 
-        for (List<String> detail : nameList) {
+        for(int i = 1; i < sizeOfCSVLines; i++) {
 
-            // for each List in the nested list, replace all the fields with respective details, and replace \\n with a line separator
-
-            String formattedEmail = templateLine
-                    .replace("<<address>>", detail.get(2) + "\n\n")
-                    .replace("<<first_name>>,", detail.get(0) + "," + "\n\n")
-                    .replace("<<years>>", detail.get(3))
-                    .replace("\\n", System.lineSeparator()) 
+            String formattedEMail = templateLine
+            .replace("<<address>>", nameList.get("address").get(i) +"\n\n")
+            .replace("<<first_name>>,", nameList.get("first_name").get(i) + "," + "\n\n")
+            .replace("<<years>>", nameList.get("years").get(i))
+            .replace("\\n", System.lineSeparator()) 
                     + "\n";
 
-            System.out.println(formattedEmail);
+            System.out.println(formattedEMail);
+
+
 
         }
+
+        
     }
 
 }
