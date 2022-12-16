@@ -7,13 +7,12 @@ import java.util.List;
 public class Main {
 
     // Constants
-
     public static final String ADD = "+";
     public static final String MINUS = "-";
     public static final String MULTI = "*";
     public static final String DIVIDE = "/";
     public static final List<String> OPERATORS = Arrays.asList(ADD, MINUS, MULTI, DIVIDE);
-    public static final String INTREGEX = "\\d+";
+    public static final String INT_REGEX_STRING = "\\d+";
 
     public static void main(String[] args) {
 
@@ -32,14 +31,14 @@ public class Main {
 
             // if exit is typed
 
-            if(splitString.length >= 1 && splitString[0].equals("exit")) {
+            if(splitString.length >= 1 && splitString[0].strip().equals("exit")) {
 
                 isQuit = true;
                 System.out.println("Bye bye");
 
             // if gibberish is typed or format is wrong
 
-            } else if(splitString.length != 3 && !splitString[0].equals("exit")) {
+            } else if(splitString.length != 3 && !splitString[0].strip().equals("exit")) {
 
                 System.out.println("Invalid input");
 
@@ -47,9 +46,9 @@ public class Main {
 
                 // if format is correct
 
-                String firstNum = splitString[0];
-                String secondNum = splitString[2];
-                String operator = splitString[1];
+                String firstNum = splitString[0].strip();
+                String secondNum = splitString[2].strip();
+                String operator = splitString[1].strip();
 
                 // If operator matches
 
@@ -57,20 +56,20 @@ public class Main {
 
                     float $newlast = 0;
 
-                    if(firstNum.matches(INTREGEX) && secondNum.matches(INTREGEX)) {
+                    if(firstNum.matches(INT_REGEX_STRING) && secondNum.matches(INT_REGEX_STRING)) {
 
                         int firstInt = Integer.parseInt(firstNum);
                         int secondInt = Integer.parseInt(secondNum);
 
                         $last = performCalculation(firstInt, operator, secondInt);
 
-                    } else if(firstNum.matches(INTREGEX) && secondNum.equals("$last")) {
+                    } else if(firstNum.matches(INT_REGEX_STRING) && secondNum.equals("$last")) {
 
                         int firstInt = Integer.parseInt(firstNum);
                         $newlast = performCalculation(firstInt, operator, $last);
                         $last = $newlast;
 
-                    } else if(firstNum.equals("$last") && secondNum.matches(INTREGEX)) {
+                    } else if(firstNum.equals("$last") && secondNum.matches(INT_REGEX_STRING)) {
 
                         int secondInt = Integer.parseInt(secondNum);
                         $newlast = performCalculation($last, operator, secondInt);

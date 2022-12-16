@@ -14,7 +14,8 @@ public class MailMerge {
 
     // For data, read the file and output the lines to a List of (first_name,
     // last_name, address, years)
-    // Create a list of lists to store them
+    // Create a nested list to store them
+    // Map? Maybe not
 
     public List<List<String>> readCSV(String dataCSV) {
 
@@ -35,8 +36,8 @@ public class MailMerge {
 
             }
 
+            // Remove the header
             detailList.remove(0);
-            // System.out.println(detailList);
 
             bfc.close();
             fr.close();
@@ -85,9 +86,12 @@ public class MailMerge {
 
             // for each List in the nested list, replace all the fields with respective details, and replace \\n with a line separator
 
-            String formattedEmail = templateLine.replace("<<address>>", detail.get(2) + "\n\n")
+            String formattedEmail = templateLine
+                    .replace("<<address>>", detail.get(2) + "\n\n")
                     .replace("<<first_name>>,", detail.get(0) + "," + "\n\n")
-                    .replace("<<years>>", detail.get(3)).replace("\\n", System.lineSeparator()) + "\n";
+                    .replace("<<years>>", detail.get(3))
+                    .replace("\\n", System.lineSeparator()) 
+                    + "\n";
 
             System.out.println(formattedEmail);
 
