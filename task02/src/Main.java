@@ -32,7 +32,7 @@ public class Main {
 
             // if exit is typed
 
-            if(splitString.length == 1 && splitString[0].equals("exit")) {
+            if(splitString.length >= 1 && splitString[0].equals("exit")) {
 
                 isQuit = true;
                 System.out.println("Bye bye");
