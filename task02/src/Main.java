@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Main {
 
+    // Constants
+
     public static final String ADD = "+";
     public static final String MINUS = "-";
     public static final String MULTI = "*";
@@ -28,10 +30,14 @@ public class Main {
             String input = cons.readLine("> ");
             String[] splitString = input.split(" ");
 
+            // if exit is typed
+
             if(splitString.length == 1 && splitString[0].equals("exit")) {
 
                 isQuit = true;
                 System.out.println("Bye bye");
+
+            // if gibberish is typed or format is wrong
 
             } else if(splitString.length < 3 && !splitString[0].equals("exit")) {
 
@@ -39,9 +45,13 @@ public class Main {
 
             } else {
 
+                // if format is correct
+
                 String firstNum = splitString[0];
                 String secondNum = splitString[2];
                 String operator = splitString[1];
+
+                // If operator matches
 
                 if(OPERATORS.contains(operator)) {
 
@@ -76,6 +86,8 @@ public class Main {
                         $last = $newlast;
                     } 
 
+                    // If $last is an integer, cast it into an integer
+
                     if($last == (int)$last) {
 
                         System.out.println((int)$last);
@@ -86,11 +98,6 @@ public class Main {
                         System.out.println($last);
 
                     }
-
-
-                    
-
-                    
 
                 } else {
 
@@ -103,8 +110,11 @@ public class Main {
             
         }
 
+    } 
 
-    } public static float performCalculation(float first, String operator, float second) {
+    // Method to perform calcuation
+    
+    public static float performCalculation(float first, String operator, float second) {
 
         float sum = 0;
 

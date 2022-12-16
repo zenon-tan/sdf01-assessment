@@ -49,6 +49,8 @@ public class MailMerge {
 
     }
 
+    // For .txt, read the lines and append it to a Stringbuilder
+
     public String readTxt(String txt) {
 
         StringBuilder mailDetail = new StringBuilder();
@@ -81,7 +83,7 @@ public class MailMerge {
 
         for (List<String> detail : nameList) {
 
-            // System.out.println(templateLine);
+            // for each List in the nested list, replace all the fields with respective details, and replace \\n with a line separator
 
             String formattedEmail = templateLine.replace("<<address>>", detail.get(2) + "\n\n")
                     .replace("<<first_name>>,", detail.get(0) + "," + "\n\n")
@@ -91,10 +93,5 @@ public class MailMerge {
 
         }
     }
-
-    // For the file format
-    // Read the file and store them in a line with \n
-
-    // Print out the formatted String
 
 }
