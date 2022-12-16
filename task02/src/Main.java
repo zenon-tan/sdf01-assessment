@@ -12,7 +12,6 @@ public class Main {
     public static final String MULTI = "*";
     public static final String DIVIDE = "/";
     public static final List<String> OPERATORS = Arrays.asList(ADD, MINUS, MULTI, DIVIDE);
-    public static final String INT_REGEX_STRING = "\\d+";
 
     public static void main(String[] args) {
 
@@ -38,7 +37,7 @@ public class Main {
 
             // if gibberish is typed or format is wrong
 
-            } else if(splitString.length != 3 && !splitString[0].strip().equals("exit")) {
+            } else if(splitString.length != 3 && !splitString[0].strip().equals("exit") && !splitString[0].equals("$last")) {
 
                 System.out.println("Invalid input");
 
@@ -50,63 +49,71 @@ public class Main {
                 String secondNum = splitString[2].strip();
                 String operator = splitString[1].strip();
 
-                // If operator matches
+                if(!firstNum.equals("$last") && !secondNum.equals("$last")) {
 
-                if(OPERATORS.contains(operator)) {
+                    try {
 
-                    float $newlast = 0;
+                    float firstVal = Float.parseFloat(firstNum);
+                    float secondVal = Float.parseFloat(secondNum);
 
-                    if(firstNum.matches(INT_REGEX_STRING) && secondNum.matches(INT_REGEX_STRING)) {
+                    float $newlast = performCalculation(firstVal, operator, secondVal);
 
-                        int firstInt = Integer.parseInt(firstNum);
-                        int secondInt = Integer.parseInt(secondNum);
-
-                        $last = performCalculation(firstInt, operator, secondInt);
-
-                    } else if(firstNum.matches(INT_REGEX_STRING) && secondNum.equals("$last")) {
-
-                        int firstInt = Integer.parseInt(firstNum);
-                        $newlast = performCalculation(firstInt, operator, $last);
-                        $last = $newlast;
-
-                    } else if(firstNum.equals("$last") && secondNum.matches(INT_REGEX_STRING)) {
-
-                        int secondInt = Integer.parseInt(secondNum);
-                        $newlast = performCalculation($last, operator, secondInt);
-                        $last = $newlast;
-
-                    }
-                     else if(firstNum.equals("$last") && secondNum.equals("$last")) {
-
-                        float firstLast = $last;
-                        float secondLast = $last;
-
-                        $newlast = performCalculation(firstLast, operator, secondLast);
-                        $last = $newlast;
-                    } 
-
-                    // If $last is an integer, cast it into an integer
-
-                    if($last == (int)$last) {
-
-                        System.out.println((int)$last);
-
-
-                    } else {
-
-                        System.out.println($last);
-
+                    $last = $newlast;
+                    
+                        
+                    } catch (Exception e) {
+                        System.out.println("Invalid number");
                     }
 
-                } else {
+                        
+                } else if(secondNum.equals("$last") && !firstNum.equals("$last")) {
 
-                    System.out.println("Please key in a valid operator (+,-,*,/)");
+                    try {
+                        float firstVal = Float.parseFloat(firstNum);
+                        $last = performCalculation(firstVal, operator, $last);
+                        
+                    } catch (Exception e) {
+                        System.out.println("Invalid number");
+                    }
+
+                } else if(firstNum.equals("$last") && !secondNum.equals("$last")) {
+
+                    try {
+
+                        float secondVal = Float.parseFloat(secondNum);
+                        $last = performCalculation($last, operator, secondVal);
+                        
+                        
+                    } catch (Exception e) {
+                        System.out.println("Invalid number");
+                    }
+                } else if(firstNum.equals("$last") && secondNum.equals("$last")){
+
+                    float firstLast = $last;
+                    float secondLast = $last;
+    
+                    $last = performCalculation(firstLast, operator, secondLast);
+
+
+
                 }
 
+                if($last == (int)$last) {
 
+                    System.out.println((int)$last);
+    
+                } else {
+    
+                    System.out.println($last);
+    
+                }
+
+            
             }
 
             
+
+      
         }
 
     } 
@@ -115,7 +122,7 @@ public class Main {
     
     public static float performCalculation(float first, String operator, float second) {
 
-        float sum = 0;
+        float sum = 0f;
 
         switch(operator) {
 
