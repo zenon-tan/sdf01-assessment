@@ -17,11 +17,8 @@ public class MailMerge {
     // For data, read the file and output the lines to a List of (first_name,
     // last_name, address, years)
     // Create a nested list to store them
-    // Map? Maybe not
 
     public HashMap<String, List<String>> readCSV(String dataCSV) {
-
-        // List of HashMap<String, String> of key = first_name, last_name, address, years
 
         HashMap<String, List<String>> tempHash = new HashMap<>();
         List<List<String>> tempdetailList = new ArrayList<List<String>>();
@@ -37,8 +34,9 @@ public class MailMerge {
             String[] splitHeaders = line.split(",");
             for(String i : splitHeaders) {
                 List<String> tempList = new ArrayList<>();
-                tempList.add(i);
+                tempList.add("<<%s>>".formatted(i));
                 tempdetailList.add(tempList);
+                //System.out.println(tempdetailList);
             }
 
             //System.out.println(tempdetailList);
@@ -62,7 +60,6 @@ public class MailMerge {
             //System.out.println(tempdetailList);
 
             for(List<String> i : tempdetailList) {
-
 
                 tempHash.put(i.get(0), i);
 
@@ -117,19 +114,27 @@ public class MailMerge {
 
         for(int i = 1; i <= numOfPeople; i++) {
 
-            String formattedEMail = templateLine
-            .replace("<<address>>", nameList.get("address").get(i) +"\n\n")
-            .replace("<<first_name>>,", nameList.get("first_name").get(i) + "," + "\n\n")
-            .replace("<<years>>", nameList.get("years").get(i))
-            .replace("\\n", System.lineSeparator()) 
-                    + "\n";
+            String formattedEmail = templateLine;
 
-            System.out.println(formattedEMail);
+            // For formatting only
+            formattedEmail = formattedEmail.replace("<<last_name>>,", "<<last_name>>" + "," + "\n\n")
+            .replace("<<first_name>>,", "<<first_name>>" + "," + "\n")
+            .replace("<<price>>!", "<<price>>! " + "\n\n")
+            .replace("<<address>>", "<<address>>" + "\n\n") + "\n";
 
+            for(String key : nameList.keySet()) {
 
+                if(templateLine.contains(key)) {
+
+                    formattedEmail = formattedEmail.replace(key, nameList.get(key).get(i))
+                                    .replace("\\n", System.lineSeparator());
+                }
+
+            }
+
+            System.out.println(formattedEmail);
 
         }
-
         
     }
 
